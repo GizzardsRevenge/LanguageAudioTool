@@ -1,0 +1,106 @@
+﻿==== TODO ====
+Use music folder in launcher	OK	
+Warning about no silence		OK
+Check all files can parse		OK
+Output folder					OK
+Delete any temp files			N/A
+Detect audio sections           OK
+Save audio section plan         OK
+Do multiple audio (final)       OK
+Make varispeed sections class   OK
+Floating point silence          OK
+Graceful handle eg no audio, not mp3 0 length
+Windows 7 encode                OK
+Progress bar / file status      OK
+First section special handling  OK
+Remove the DEBUGs               WIP
+Silence at end                  OK
+Enhance: auto volume scaling
+Reorder in list                 OK
+Upload to Git
+Add beeps
+Support for other file formats
+
+Bug 1: audio sections have random trailing silence                                          OK
+Bug 2: Sometimes end of audio has silence inserted somehow? (timestamp wrong for audios?)   OK
+Bug 3: Sped up slowed down audio still trying to fit unchanged output timespan              OK
+
+Terminology:
+
+1. Section e.g. 30-60 seconds is audio = 1 audio section
+2. File worker, one per file does all the tasks for that file
+3. SoundChunk is a potential audiosection, normally several get squished together to make an audio section
+4. Action = Job which is one task for one section e.g. play at 70% speed
+
+
+Functionality needed for audio DONE ELSEWHERE
+
+File load
+File decode
+Cut out sections
+Create file from sections
+Duplicate sections
+Measure silence
+Create silence
+Change tempo of section
+Change pitch of section (after changing tempo)
+
+
+
+
+Another silence detect
+
+static class AudioFileReaderExt
+{
+    public enum SilenceLocation { Start, End }
+
+    private static bool IsSilence(float amplitude, sbyte threshold)
+    {
+        double dB = 20 * Math.Log10(Math.Abs(amplitude));
+        return dB < threshold;
+    }
+    public static TimeSpan GetSilenceDuration(this AudioFileReader reader,
+                                              SilenceLocation location,
+                                              sbyte silenceThreshold = -40)
+    {
+        int counter = 0;
+        bool volumeFound = false;
+        bool eof = false;
+        long oldPosition = reader.Position;
+
+        var buffer = new float[reader.WaveFormat.SampleRate * 4];
+        while (!volumeFound && !eof)
+        {
+            int samplesRead = reader.Read(buffer, 0, buffer.Length);
+            if (samplesRead == 0)
+                eof = true;
+
+            for (int n = 0; n < samplesRead; n++)
+            {
+                if (IsSilence(buffer[n], silenceThreshold))
+                {
+                    counter++;
+                }
+                else
+                {
+                    if (location == SilenceLocation.Start)
+                    {
+                        volumeFound = true;
+                        break;
+                    }
+                    else if (location == SilenceLocation.End)
+                    {
+                        counter = 0;
+                    }
+                }
+            }
+        }
+
+        // reset position
+        reader.Position = oldPosition;
+
+        double silenceSamples = (double)counter / reader.WaveFormat.Channels;
+        double silenceDuration = (silenceSamples / reader.WaveFormat.SampleRate) * 1000;
+        return TimeSpan.FromMilliseconds(silenceDuration);
+    }
+}
