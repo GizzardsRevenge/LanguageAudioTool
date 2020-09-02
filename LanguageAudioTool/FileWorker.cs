@@ -1,10 +1,10 @@
-﻿
-using NAudio.Lame;
-using NAudio.MediaFoundation;
+﻿using NAudio.Lame;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.IO;
+using System.Windows.Forms;
 using VarispeedDemo.SoundTouch;
 
 namespace LanguageAudioTool
@@ -37,12 +37,80 @@ namespace LanguageAudioTool
             _outputPath = Path.Combine(newPath, filename);
         }
 
-        public void DoWork()
-        {   
+        public void DoWork(bool multiFiles)
+        {
+            if (multiFiles)
+                DoWorkMultiFiles();
+            else
+                DoWorkSingleFile();
+        }
+
+        private void DoWorkMultiFiles()
+        {
+            int sectionID = 1;
+            string filenameFirstBit = Path.Combine(Path.GetDirectoryName(_outputPath), Path.GetFileNameWithoutExtension(_outputPath));
+
+            foreach (AudioSection section in _sections)
+            {
+                TimeSpan duration = section.End - section.Start;
+
+                using (AudioFileReader reader = new AudioFileReader(_file.Filename))
+                {
+                    using (SectionedSampleProvider provider = new SectionedSampleProvider(reader, 100, new SoundTouchProfile(true, false, false, 50)))
+                    {
+                        foreach (Job job in _jobs)
+                        {
+                            if (job.JobType == Job.Type.AddSection)
+                                provider.AddSectionAudio(section.Start, duration, (float)job.Parameter / 100f);
+                            else if (job.JobType == Job.Type.AddBeep)
+                            {
+                                provider.AddSectionSilence(new TimeSpan(0, 0, 0, 0, 500));
+                                provider.AddSectionBeep(new TimeSpan(0, 0, 0, 0, job.Parameter));
+                                provider.AddSectionSilence(new TimeSpan(0, 0, 0, 0, 500));
+                            }
+                            else // silence
+                                provider.AddSectionSilence(new TimeSpan(0, 0, job.Parameter));
+                        }
+
+                        // Drop the last segment, if it is silence
+                        if (_jobs[_jobs.Count - 1].JobType == Job.Type.AddSilence)
+                        {
+                            provider.DropLastSection();
+                        }
+                        else if (_jobs[_jobs.Count - 1].JobType == Job.Type.AddBeep)
+                        {
+                            provider.DropLastSection(); // drop silence buffer
+                            provider.DropLastSection(); // drop the beep
+                            provider.DropLastSection(); // drop silence buffer
+                        }
+
+                        // Sanity check
+                        if (provider.Sections == 0)
+                        {
+                            string message = String.Format("This file will be ignored, as it could not be processed into audio sections:{0}{1}", Environment.NewLine, _file.Filename);
+                            MessageBox.Show(message, "Bad file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            continue;
+                        }
+
+                        // now encode to mp3
+                        string generatedFilename = filenameFirstBit + sectionID.ToString().PadLeft(3, '0') + ".mp3";
+                        sectionID++;
+
+                        if (_useLameEncoding)
+                            DoEncodeWindows7(provider, generatedFilename);
+                        else
+                            DoEncodeWindows8(provider, 44100, generatedFilename);
+                    }
+                }
+            }
+        }
+
+        private void DoWorkSingleFile()
+        { 
             // Load reader and sample provider
             using (AudioFileReader reader = new AudioFileReader(_file.Filename))
             {
-                using (SectionedSampleProvider provider = new SectionedSampleProvider(reader, 100, new SoundTouchProfile(true, false)))
+                using (SectionedSampleProvider provider = new SectionedSampleProvider(reader, 100, new SoundTouchProfile(true, false, false, 50)))
                 {
                     bool firstSection = true;
 
@@ -69,6 +137,12 @@ namespace LanguageAudioTool
                         {
                             if (job.JobType == Job.Type.AddSection)
                                 provider.AddSectionAudio(section.Start, duration, (float)job.Parameter / 100f);
+                            else if (job.JobType == Job.Type.AddBeep)
+                            {
+                                provider.AddSectionSilence(new TimeSpan(0, 0, 0, 0, 500));
+                                provider.AddSectionBeep(new TimeSpan(0, 0, 0, 0, job.Parameter));
+                                provider.AddSectionSilence(new TimeSpan(0, 0, 0, 0, 500));
+                            }
                             else // silence
                                 provider.AddSectionSilence(new TimeSpan(0, 0, job.Parameter));
                         }
@@ -79,12 +153,26 @@ namespace LanguageAudioTool
                     {
                         provider.DropLastSection();
                     }
+                    else if (_jobs[_jobs.Count - 1].JobType == Job.Type.AddBeep)
+                    {
+                        provider.DropLastSection(); // drop silence buffer
+                        provider.DropLastSection(); // drop the beep
+                        provider.DropLastSection(); // drop silence buffer
+                    }
+
+                    // Sanity check
+                    if (provider.Sections == 0)
+                    {
+                        string message = String.Format("This file will be ignored, as it could not be processed into audio sections:{0}{1}", Environment.NewLine, _file.Filename);
+                        MessageBox.Show(message, "Bad file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     // now encode to mp3
                     if (_useLameEncoding)
-                        DoEncodeWindows7(provider);
+                        DoEncodeWindows7(provider, _outputPath);
                     else
-                        DoEncodeWindows8(provider, 44100);
+                        DoEncodeWindows8(provider, 44100, _outputPath);
 
                 }
             }
@@ -96,14 +184,14 @@ namespace LanguageAudioTool
             set { _useLameEncoding = value; }
         }
 
-        internal void DoEncodeWindows8 (SectionedSampleProvider provider, int sampleRate)
+        internal void DoEncodeWindows8 (SectionedSampleProvider provider, int sampleRate, string path)
         {
-            MediaFoundationEncoder.EncodeToMp3(provider.ToWaveProvider(), _outputPath, sampleRate);
+            MediaFoundationEncoder.EncodeToMp3(provider.ToWaveProvider(), path, sampleRate);
         }
 
-        internal void DoEncodeWindows7(SectionedSampleProvider provider)
+        internal void DoEncodeWindows7(SectionedSampleProvider provider, string path)
         {
-            using (var writer = new LameMP3FileWriter(_outputPath, provider.WaveFormat, LAMEPreset.STANDARD))
+            using (var writer = new LameMP3FileWriter(path, provider.WaveFormat, LAMEPreset.STANDARD))
             {
                 using (var waveStream = new SectionToWaveStream(provider))
                 {

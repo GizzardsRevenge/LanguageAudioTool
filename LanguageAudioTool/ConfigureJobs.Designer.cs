@@ -1,6 +1,6 @@
 ﻿namespace LanguageAudioTool
 {
-    partial class Configure
+    partial class ConfigureJobs
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigureJobs));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.numBeep = new System.Windows.Forms.NumericUpDown();
@@ -47,21 +48,13 @@
             this.btnClearAll = new System.Windows.Forms.Button();
             this.btnDeleteSelected = new System.Windows.Forms.Button();
             this.lstActions = new System.Windows.Forms.ListBox();
-            this.btnGo = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radRemove = new System.Windows.Forms.RadioButton();
-            this.radPlayOnceFullSpeed = new System.Windows.Forms.RadioButton();
-            this.radHandleAsNormal = new System.Windows.Forms.RadioButton();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.btnPrev = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBeep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSilenceSeconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numChunkSpeed)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -84,9 +77,9 @@
             this.groupBox1.Controls.Add(this.btnClearAll);
             this.groupBox1.Controls.Add(this.btnDeleteSelected);
             this.groupBox1.Controls.Add(this.lstActions);
-            this.groupBox1.Location = new System.Drawing.Point(32, 121);
+            this.groupBox1.Location = new System.Drawing.Point(32, 112);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(477, 333);
+            this.groupBox1.Size = new System.Drawing.Size(477, 307);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "For each section of audio...";
@@ -94,9 +87,9 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(123, 292);
+            this.label8.Location = new System.Drawing.Point(123, 270);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(69, 13);
+            this.label8.Size = new System.Drawing.Size(71, 12);
             this.label8.TabIndex = 25;
             this.label8.Text = "second beep";
             // 
@@ -108,14 +101,14 @@
             0,
             0,
             65536});
-            this.numBeep.Location = new System.Drawing.Point(65, 290);
+            this.numBeep.Location = new System.Drawing.Point(65, 268);
             this.numBeep.Maximum = new decimal(new int[] {
             3,
             0,
             0,
             0});
             this.numBeep.Name = "numBeep";
-            this.numBeep.Size = new System.Drawing.Size(52, 20);
+            this.numBeep.Size = new System.Drawing.Size(52, 21);
             this.numBeep.TabIndex = 24;
             this.numBeep.Value = new decimal(new int[] {
             5,
@@ -126,17 +119,17 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(20, 292);
+            this.label9.Location = new System.Drawing.Point(20, 270);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 13);
+            this.label9.Size = new System.Drawing.Size(41, 12);
             this.label9.TabIndex = 23;
             this.label9.Text = "Play a";
             // 
             // btnBeep
             // 
-            this.btnBeep.Location = new System.Drawing.Point(242, 287);
+            this.btnBeep.Location = new System.Drawing.Point(242, 265);
             this.btnBeep.Name = "btnBeep";
-            this.btnBeep.Size = new System.Drawing.Size(75, 25);
+            this.btnBeep.Size = new System.Drawing.Size(75, 23);
             this.btnBeep.TabIndex = 22;
             this.btnBeep.Text = "Add";
             this.btnBeep.UseVisualStyleBackColor = true;
@@ -145,9 +138,9 @@
             // btnDown
             // 
             this.btnDown.Enabled = false;
-            this.btnDown.Location = new System.Drawing.Point(101, 176);
+            this.btnDown.Location = new System.Drawing.Point(101, 162);
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(75, 25);
+            this.btnDown.Size = new System.Drawing.Size(75, 23);
             this.btnDown.TabIndex = 21;
             this.btnDown.Text = "↓ Move Dn";
             this.btnDown.UseVisualStyleBackColor = true;
@@ -156,9 +149,9 @@
             // btnUp
             // 
             this.btnUp.Enabled = false;
-            this.btnUp.Location = new System.Drawing.Point(20, 176);
+            this.btnUp.Location = new System.Drawing.Point(20, 162);
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(75, 25);
+            this.btnUp.Size = new System.Drawing.Size(75, 23);
             this.btnUp.TabIndex = 20;
             this.btnUp.Text = "↑ Move Up";
             this.btnUp.UseVisualStyleBackColor = true;
@@ -166,9 +159,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(242, 256);
+            this.button1.Location = new System.Drawing.Point(242, 236);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 25);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 19;
             this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = true;
@@ -177,15 +170,15 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(118, 261);
+            this.label4.Location = new System.Drawing.Point(118, 241);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(95, 13);
+            this.label4.Size = new System.Drawing.Size(113, 12);
             this.label4.TabIndex = 18;
             this.label4.Text = "seconds of silence";
             // 
             // numSilenceSeconds
             // 
-            this.numSilenceSeconds.Location = new System.Drawing.Point(60, 258);
+            this.numSilenceSeconds.Location = new System.Drawing.Point(60, 238);
             this.numSilenceSeconds.Maximum = new decimal(new int[] {
             60,
             0,
@@ -197,7 +190,7 @@
             0,
             0});
             this.numSilenceSeconds.Name = "numSilenceSeconds";
-            this.numSilenceSeconds.Size = new System.Drawing.Size(52, 20);
+            this.numSilenceSeconds.Size = new System.Drawing.Size(52, 21);
             this.numSilenceSeconds.TabIndex = 17;
             this.numSilenceSeconds.Value = new decimal(new int[] {
             3,
@@ -208,17 +201,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 260);
+            this.label3.Location = new System.Drawing.Point(20, 240);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 13);
+            this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 16;
             this.label3.Text = "Play";
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(242, 224);
+            this.btnAdd.Location = new System.Drawing.Point(242, 207);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 25);
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 15;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -227,9 +220,9 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(182, 230);
+            this.label2.Location = new System.Drawing.Point(182, 212);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.Size = new System.Drawing.Size(47, 12);
             this.label2.TabIndex = 14;
             this.label2.Text = "% speed";
             // 
@@ -240,7 +233,7 @@
             0,
             0,
             0});
-            this.numChunkSpeed.Location = new System.Drawing.Point(123, 227);
+            this.numChunkSpeed.Location = new System.Drawing.Point(123, 210);
             this.numChunkSpeed.Maximum = new decimal(new int[] {
             200,
             0,
@@ -252,7 +245,7 @@
             0,
             0});
             this.numChunkSpeed.Name = "numChunkSpeed";
-            this.numChunkSpeed.Size = new System.Drawing.Size(53, 20);
+            this.numChunkSpeed.Size = new System.Drawing.Size(53, 21);
             this.numChunkSpeed.TabIndex = 13;
             this.numChunkSpeed.Value = new decimal(new int[] {
             100,
@@ -263,26 +256,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 229);
+            this.label1.Location = new System.Drawing.Point(20, 211);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 13);
+            this.label1.Size = new System.Drawing.Size(125, 12);
             this.label1.TabIndex = 12;
             this.label1.Text = "Play the section at ";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 18);
+            this.label7.Location = new System.Drawing.Point(20, 17);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(90, 13);
+            this.label7.Size = new System.Drawing.Size(107, 12);
             this.label7.TabIndex = 11;
             this.label7.Text = "Do these actions:";
             // 
             // btnClearAll
             // 
-            this.btnClearAll.Location = new System.Drawing.Point(323, 176);
+            this.btnClearAll.Location = new System.Drawing.Point(323, 162);
             this.btnClearAll.Name = "btnClearAll";
-            this.btnClearAll.Size = new System.Drawing.Size(123, 25);
+            this.btnClearAll.Size = new System.Drawing.Size(123, 23);
             this.btnClearAll.TabIndex = 10;
             this.btnClearAll.Text = "Clear all";
             this.btnClearAll.UseVisualStyleBackColor = true;
@@ -291,9 +284,9 @@
             // btnDeleteSelected
             // 
             this.btnDeleteSelected.Enabled = false;
-            this.btnDeleteSelected.Location = new System.Drawing.Point(194, 176);
+            this.btnDeleteSelected.Location = new System.Drawing.Point(194, 162);
             this.btnDeleteSelected.Name = "btnDeleteSelected";
-            this.btnDeleteSelected.Size = new System.Drawing.Size(123, 25);
+            this.btnDeleteSelected.Size = new System.Drawing.Size(123, 23);
             this.btnDeleteSelected.TabIndex = 9;
             this.btnDeleteSelected.Text = "Delete selected";
             this.btnDeleteSelected.UseVisualStyleBackColor = true;
@@ -302,129 +295,63 @@
             // lstActions
             // 
             this.lstActions.FormattingEnabled = true;
-            this.lstActions.Location = new System.Drawing.Point(20, 35);
+            this.lstActions.ItemHeight = 12;
+            this.lstActions.Location = new System.Drawing.Point(20, 32);
             this.lstActions.Name = "lstActions";
-            this.lstActions.Size = new System.Drawing.Size(426, 134);
+            this.lstActions.Size = new System.Drawing.Size(426, 124);
             this.lstActions.TabIndex = 0;
             this.lstActions.SelectedIndexChanged += new System.EventHandler(this.lstActions_SelectedIndexChanged);
             // 
-            // btnGo
+            // btnPrev
             // 
-            this.btnGo.Location = new System.Drawing.Point(108, 541);
-            this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(122, 47);
-            this.btnGo.TabIndex = 1;
-            this.btnGo.Text = "Go!";
-            this.btnGo.UseVisualStyleBackColor = true;
-            this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
+            this.btnPrev.Location = new System.Drawing.Point(108, 499);
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.Size = new System.Drawing.Size(122, 43);
+            this.btnPrev.TabIndex = 1;
+            this.btnPrev.Text = "< Prev";
+            this.btnPrev.UseVisualStyleBackColor = true;
+            this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
             // 
-            // btnCancel
+            // btnNext
             // 
-            this.btnCancel.Location = new System.Drawing.Point(270, 541);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(122, 47);
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.radRemove);
-            this.groupBox2.Controls.Add(this.radPlayOnceFullSpeed);
-            this.groupBox2.Controls.Add(this.radHandleAsNormal);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Location = new System.Drawing.Point(12, 398);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(477, 155);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "First section of audio";
-            // 
-            // radRemove
-            // 
-            this.radRemove.AutoSize = true;
-            this.radRemove.Location = new System.Drawing.Point(20, 121);
-            this.radRemove.Name = "radRemove";
-            this.radRemove.Size = new System.Drawing.Size(73, 17);
-            this.radRemove.TabIndex = 4;
-            this.radRemove.Text = "Remove it";
-            this.radRemove.UseVisualStyleBackColor = true;
-            // 
-            // radPlayOnceFullSpeed
-            // 
-            this.radPlayOnceFullSpeed.AutoSize = true;
-            this.radPlayOnceFullSpeed.Location = new System.Drawing.Point(20, 98);
-            this.radPlayOnceFullSpeed.Name = "radPlayOnceFullSpeed";
-            this.radPlayOnceFullSpeed.Size = new System.Drawing.Size(135, 17);
-            this.radPlayOnceFullSpeed.TabIndex = 3;
-            this.radPlayOnceFullSpeed.Text = "Play once, at full speed";
-            this.radPlayOnceFullSpeed.UseVisualStyleBackColor = true;
-            // 
-            // radHandleAsNormal
-            // 
-            this.radHandleAsNormal.AutoSize = true;
-            this.radHandleAsNormal.Checked = true;
-            this.radHandleAsNormal.Location = new System.Drawing.Point(20, 74);
-            this.radHandleAsNormal.Name = "radHandleAsNormal";
-            this.radHandleAsNormal.Size = new System.Drawing.Size(238, 17);
-            this.radHandleAsNormal.TabIndex = 2;
-            this.radHandleAsNormal.TabStop = true;
-            this.radHandleAsNormal.Text = "Perform the same actions as a normal section";
-            this.radHandleAsNormal.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(20, 46);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 12);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "other sections";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(18, 33);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(443, 12);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "If the first section is an intro you may wish to handle it differently to";
+            this.btnNext.Location = new System.Drawing.Point(270, 499);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(122, 43);
+            this.btnNext.TabIndex = 2;
+            this.btnNext.Text = "Next >";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(129, 22);
+            this.label10.Location = new System.Drawing.Point(129, 20);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(242, 24);
             this.label10.TabIndex = 7;
             this.label10.Text = "Step 3/4 : Define actions";
             // 
-            // Configure
+            // ConfigureJobs
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(501, 623);
+            this.ClientSize = new System.Drawing.Size(501, 575);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnGo);
+            this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.btnPrev);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
-            this.Name = "Configure";
+            this.Name = "ConfigureJobs";
+            this.ShowIcon = false;
             this.Text = "Language Audio Tool v0.1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBeep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSilenceSeconds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numChunkSpeed)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -434,14 +361,8 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox lstActions;
-        private System.Windows.Forms.Button btnGo;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton radRemove;
-        private System.Windows.Forms.RadioButton radPlayOnceFullSpeed;
-        private System.Windows.Forms.RadioButton radHandleAsNormal;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnPrev;
+        private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnClearAll;
         private System.Windows.Forms.Button btnDeleteSelected;
         private System.Windows.Forms.Label label7;
@@ -455,7 +376,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Button btnUp;
-        private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numBeep;
         private System.Windows.Forms.Label label9;

@@ -28,9 +28,11 @@ namespace LanguageAudioTool
             // Get defaults
             int percentSpeed = Properties.Settings.Default.SectionInitialSpeed;
             int silenceSeconds = Properties.Settings.Default.SilenceInitialDuration;
+            int beepMS = Properties.Settings.Default.BeepInitialDurationMS;
 
             numChunkSpeed.Value = percentSpeed;
             numSilenceSeconds.Value = silenceSeconds;
+            numBeep.Value = 0.001m * beepMS;
 
             int behave = Properties.Settings.Default.FirstSectionBehaviour;
 
@@ -189,6 +191,7 @@ This is to prevent possible loss or corruption of data.", "Aborted", MessageBoxB
                 Properties.Settings.Default.SilenceInitialDuration = (int)numSilenceSeconds.Value;
                 Properties.Settings.Default.SectionInitialSpeed = (int)numChunkSpeed.Value;
                 Properties.Settings.Default.OutputFolder = dialog.SelectedPath;
+                Properties.Settings.Default.BeepInitialDurationMS = (int)(numBeep.Value * 1000m);
 
                 if (radHandleAsNormal.Checked)
                     Properties.Settings.Default.FirstSectionBehaviour = 0;
@@ -344,6 +347,11 @@ Are you sure you want to proceed?", "Proceed?", MessageBoxButtons.YesNoCancel, M
                 control.Invoke(action);
             else
                 action();
+        }
+
+        private void btnBeep_Click(object sender, EventArgs e)
+        {
+            AddJob(new Job(Job.Type.AddBeep, (int)(numBeep.Value * 1000m)));
         }
     }
 }

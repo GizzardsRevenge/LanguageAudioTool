@@ -8,7 +8,8 @@ namespace LanguageAudioTool
         public enum Type
         {
             AddSection,
-            AddSilence
+            AddSilence,
+            AddBeep
         }
 
         private int _parameter;
@@ -38,6 +39,8 @@ namespace LanguageAudioTool
                     else
                         return "== Play " + _parameter.ToString() + " seconds of silence ==";
                 }
+                case Type.AddBeep: return String.Format("== Play a {0:1} second beep", 0.001f * _parameter);
+                        
             }
 
             // Should never get here
